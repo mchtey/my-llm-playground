@@ -129,3 +129,17 @@ js_splitter = RecursiveCharacterTextSplitter.from_language(
     language=Language.JS, chunk_size=65, chunk_overlap=0
 )
 print(js_splitter.create_documents([javascript_text]))
+
+# 4. Semantic Chunking
+print("#### Semantic Chunking ####")
+
+from langchain_experimental.text_splitter import SemanticChunker
+from langchain_openai.embeddings import OpenAIEmbeddings
+
+# Percentile - all differences between sentences are calculated, and then any difference greater than the X percentile is split
+text_splitter = SemanticChunker(OpenAIEmbeddings())
+text_splitter = SemanticChunker(
+    OpenAIEmbeddings(), breakpoint_threshold_type="percentile" # "standard_deviation", "interquartile"
+)
+documents = text_splitter.create_documents([text])
+print(documents)
