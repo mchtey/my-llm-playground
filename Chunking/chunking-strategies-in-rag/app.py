@@ -6,7 +6,6 @@ from langchain_community import embeddings
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import  StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
-from rules import set_perm
 
 # Initialize the local LLM using the Mistral model
 local_llm = ChatOllama(model = "mistral")
@@ -63,3 +62,14 @@ text_splitter = CharacterTextSplitter(
 )
 documents = text_splitter.create_documents([text])
 print(documents)
+
+# 2. Recursive Character Text Splitting
+print("#### Recursive Character Text Splitting ####")
+
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+with open('content.txt', 'r', encoding='utf-8') as file:
+    text = file.read()
+
+# text_splitter = RecursiveCharacterTextSplitter(chunk_size=65, chunk_overlap=0) # ["\n\n", "\n", " ", ""] 65,450
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=450, chunk_overlap=0)
+print(text_splitter.create_documents([text]))
