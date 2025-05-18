@@ -34,3 +34,32 @@ def rag(chunks, collection_name):
     )
     result = chain.invoke("what is the use of Text Splitting?")
     print(result)
+
+# 1. Character Text Splitting
+print("#### Character Text Splitting ####")
+"""
+Defining the number of characters for chunk size and performing the chunking process accordingly
+"""
+
+text = "Text splitting in LangChain is a critical feature that facilitates the division of large texts into smaller, manageable segments. "
+
+# Manuel Splitting
+chunks = []
+chunk_size = 35 # Characters
+for i in range(0, len(text), chunk_size):
+    chunk = text[i:i + chunk_size]
+    chunks.append(chunk)
+documents = [Document(page_content=chunk, metadata={"source": "local"}) for chunk in chunks]
+print(documents)
+
+# Auotmatic Text Splitting
+from langchain.text_splitter import CharacterTextSplitter
+text_splitter = CharacterTextSplitter(
+    chunk_size=35,
+    chunk_overlap=0,
+    separator='',
+    strip_whitespace=False
+
+)
+documents = text_splitter.create_documents([text])
+print(documents)
