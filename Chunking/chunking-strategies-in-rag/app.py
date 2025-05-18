@@ -190,3 +190,14 @@ for i, para in enumerate(paragraphs[:5]):
 
 print (f"You have {len(text_propositions)} propositions")
 print(text_propositions[:10])
+
+print("#### Agentic Chunking ####")
+
+from agentic_chunker import AgenticChunker
+ac = AgenticChunker()
+ac.add_propositions(text_propositions)
+print(ac.pretty_print_chunks())
+chunks = ac.get_chunks(get_type='list_of_strings')
+print(chunks)
+documents = [Document(page_content=chunk, metadata={"source": "local"}) for chunk in chunks]
+rag(documents, "agentic-chunks")
