@@ -2,7 +2,7 @@ from rich import print
 from langchain.docstore.document import Document
 from langchain_community.chat_models import ChatOllama
 from langchain_community.vectorstores import Chroma
-from langchain_community import embeddings
+from langchain_community.embeddings import OllamaEmbeddings
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import  StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
@@ -16,7 +16,7 @@ def rag(chunks, collection_name):
     vectorstore = Chroma.from_documents(
         documents=documents,
         collection_name=collection_name,
-        embedding=embeddings.ollama.OllamaEmbeddings(model="nomic-embed-text"),
+        embedding = OllamaEmbeddings(model="nomic-embed-text"),
     )
     retriever = vectorstore.as_retriever()
 
@@ -156,7 +156,6 @@ from langchain_core.runnables import RunnableLambda
 from langchain.chains import create_extraction_chain
 from typing import Optional, List
 from langchain.chains import create_extraction_chain_pydantic
-# from langchain_core.pydantic_v1 import BaseModel
 from langchain import hub
 from pydantic import BaseModel
 
