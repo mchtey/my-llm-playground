@@ -160,9 +160,9 @@ from langchain.chains import create_extraction_chain_pydantic
 from langchain import hub
 from pydantic import BaseModel
 
-prompt_template = hub.pull("wfh/proposal-indexing")
+obj = hub.pull("wfh/proposal-indexing")
 llm = ChatOpenAI(model="gpt-3.5-turbo")
-runnable = prompt_template | llm
+runnable = obj | llm
 
 
 class Sentences(BaseModel):
