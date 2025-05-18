@@ -74,3 +74,58 @@ with open('content.txt', 'r', encoding='utf-8') as file:
 # text_splitter = RecursiveCharacterTextSplitter(chunk_size=65, chunk_overlap=0) # ["\n\n", "\n", " ", ""] 65,450
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=450, chunk_overlap=0)
 print(text_splitter.create_documents([text]))
+
+# 3. Document Specific Splitting
+print("#### Document Specific Splitting ####")
+from langchain.text_splitter import MarkdownTextSplitter
+
+splitter = MarkdownTextSplitter(chunk_size = 40, chunk_overlap=0)
+markdown_text = """
+# Fun in California
+
+## Driving
+
+Try driving on the 1 down to San Diego
+
+### Food
+
+Make sure to eat a burrito while you're there
+
+## Hiking
+
+Go to Yosemite
+"""
+
+print(splitter.create_documents([markdown_text]))
+
+# Document Specific Splitting - Python
+from langchain.text_splitter import PythonCodeTextSplitter
+python_text = """
+class Person:
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+
+p1 = Person("John", 36)
+
+for i in range(10):
+    print (i)
+"""
+python_splitter = PythonCodeTextSplitter(chunk_size=100, chunk_overlap=0)
+print(python_splitter.create_documents([python_text]))
+
+# Document Specific Splitting - Javascript
+from langchain.text_splitter import RecursiveCharacterTextSplitter, Language
+javascript_text = """
+// Function is called, the return value will end up in x
+let x = myFunction(4, 3);
+
+function myFunction(a, b) {
+// Function returns the product of a and b
+  return a * b;
+}
+"""
+js_splitter = RecursiveCharacterTextSplitter.from_language(
+    language=Language.JS, chunk_size=65, chunk_overlap=0
+)
+print(js_splitter.create_documents([javascript_text]))
